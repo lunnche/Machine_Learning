@@ -310,4 +310,32 @@ assumption啥，比如说 a linear model makes the assumption that the data is f
 
 在1996年的一篇著名论文中，David Wolpert证明了如果你对数据完全不做任何假设，那么就没有理由选择一种模型而不是其他模型。这就是所谓的“没有免费的午餐”定理。对于某些数据集，最好的模型是线性模型，而对于其他数据集，最好的模型是神经网络。没有一个模型是先天保证更好地工作的(这就是这个定理的名字)。确定哪个模型是最好的唯一方法是对所有模型进行评估。由于这是不可能的，所以在实践中,你对数据做了一些合理的假设，只评估了几个合理的模型。例如，对于简单的任务，您可以评估具有不同级别正则化的线性模型，而对于复杂的问题，您可以评估不同的神经网络。
 
+# Chpater 2. End-to-End Machine Learning Project
+来来来，上手干了，
+如果你是个数据科学家，你解决问题的步骤：
+1. Look at the big picture.
+
+2. Get the data.
+
+3. Discover and visualize the data to gain insights.
+
+4. Prepare the data for Machine Learning algorithms.
+
+5. Select a model and train it.
+
+6. Fine-tune your model.
+
+7. Present your solution.
+
+8. Launch, monitor, and maintain your system.
+
+## Working with Real Data
+
+附件b里有个机器学习解决问题一般清单  
+
+明确你的最终目标，它关系到你问题的框架、你将选择的算法、你用什么性能指标来评价模型，你为了解决它该付出多少精力。  
+
+**A sequence of data processing components is called a data pipeline.**
+
+数据管道的组件如果换了，可能不会被发现，如果没有恰当的监控机制的话。  
 
