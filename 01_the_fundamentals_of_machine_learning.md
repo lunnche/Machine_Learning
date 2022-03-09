@@ -264,4 +264,50 @@ The system will not perform well if your training set is too small, or if the da
 
 ## Testing and Validating
 
+split your data into two sets:training set and test set.
+
+The error on new cases is called the generalization error(or out-of=sample error)
+
+**If the training error is low(i.e. your model makes few mistakes on the training set) but the generalization error is high,it means that your model is overfitting the training data**
+
+It is common to use 80% of the training and hold out 20% for testing.但如果样本有10million，那testing 留1%也是足够的。
+
+## Hyperparameter Tuning and Model Selection
+解决某个问题，怎么决定用哪种模型呢，用linear model还是polynomial model?都去训练然后比谁在test data上表现好。  
+
+想对模型正则化来避免过拟合，怎么确定regularization hyperparameter?
+一种想法是超参试100个数，选出泛化误差最小的那个，比如5%的误差，但之后你的模型在实际应用中会发现误差可能变为15%了，why？
+The problem is that you measured the generaliztion error multiple times on the test set,你把精力都花在如果让你的模型和参数在这个test set上表现得好了，你的模型过于“专”了，泛化就做不好了。
+
+解决这一问题的办法叫做：holdout validation
+把训练集的一部分变成验证集：
+hold out part of the training set to evaluate several candidate models and select the best one.The new heldout set is called the validation set(or sometimes the development set,or dev set).
+
+you train multiple models with various hyperparameters on the reduced training set(i.e. the full training set minus the validation set),and you select the model that performs best on the validation set.After this holdout validation process,**you train the best model on the full training set(including the validation set)**,and this gives you the final model.
+Lastly,you evaluate this final model on the test set to get an estimate of the generalization error.  
+
+上述做法通常有效，但如果验证集设置得过小，那就不管用了，如果验证集太大，剩下的training set就小了，为啥这样不好：since the final model will be trained on the full training set,it is not ideal to compare candidate models trained on a much smaller training set.
+
+解决上述问题的办法是perform repeated **cross-validation**:设置多个小验证集，每个候选模型都在每一个小验证集上验证一次，每个模型在每个小验证集上都验证后取平均，我们会得到一个准确的结果，  但这样时间成本将加大。  
+
+## Data Mismatch  
+有时候，你训练数据非常多，但和生产中实际数据won't be perfectly representative.这种情况下优先要保证validation 和 test集里的数据是representative的。你可以让它们仅包含representative data.
+你可以把representative data洗乱，一半放在验证集中，另一半放在测试集中(确保没有重复或接近重复的结果出现在两个集中)。
+
+
+来来来 看看什么是套娃  test不够用，正上validation,validation不够用，再整上train-dev set:
+
+你要做个app ，输入拍的花的照片，输出告诉你是啥花，你从网上下些花花🌺的照片训练，这些网花照片和相机排出的花很可能是不相关的，你需要确保validation set 和 test set里有且仅有和相机花相关的网花照片。然后呢你可能遇到这样的问题：if you observe that the performance of your model on the validation set is disappointing,you will not know whether this is because your model has overfit the training set,or whether this is just due to the mismatch between the web pictures and the mobile app pictures.
+解决方法是啥：把一部分网花照片设置成train-dev set。先在其上evaluate，排除过拟合的问题，那就是mismatch的问题了。
+怎么解决？对网花进行预处理让它们看起来更像相机花，
+相反地，如果在train-dev set上验证结果就不好，那就是overfitting的问题，怎么解决：简化，正则化你的模型，尝试获取更多的训练数据，清理训练数据。  
+
+## No Free Lunch Theorem
+A model is a simplified version of the observations.
+The simplifications are meant to discard the superfluous details that are unlikely to generalize to new instances.
+需要保留什么数据，舍弃什么数据，你需要做assumptions.  
+assumption啥，比如说 a linear model makes the assumption that the data is fundamentally linear and that the distance between the instances and the straight line is just noise,which can safely be ignored.
+
+在1996年的一篇著名论文中，David Wolpert证明了如果你对数据完全不做任何假设，那么就没有理由选择一种模型而不是其他模型。这就是所谓的“没有免费的午餐”定理。对于某些数据集，最好的模型是线性模型，而对于其他数据集，最好的模型是神经网络。没有一个模型是先天保证更好地工作的(这就是这个定理的名字)。确定哪个模型是最好的唯一方法是对所有模型进行评估。由于这是不可能的，所以在实践中,你对数据做了一些合理的假设，只评估了几个合理的模型。例如，对于简单的任务，您可以评估具有不同级别正则化的线性模型，而对于复杂的问题，您可以评估不同的神经网络。
+
 
