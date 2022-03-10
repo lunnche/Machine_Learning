@@ -339,3 +339,26 @@ assumption啥，比如说 a linear model makes the assumption that the data is f
 
 数据管道的组件如果换了，可能不会被发现，如果没有恰当的监控机制的话。  
 
+然后还要问问what the current solution looks like(if any).
+the current situation will often give you a reference performance,as well as insights on how to solve the problem.
+
+然后 你开始正式干活
+第一步：
+frame your problem:
+supervised,unsupervised,reinforcement learning?
+classification ? regression ?
+batch learning or online learning
+
+预测房价 是 multiple regression  多次回归   univariate regression 一元回归 
+
+预测房价用batch learning 就可以
+If the data were huge,you could either split your batch learning work across multiple servers(using the MapReduce technique),or you could use an online learning technique.
+
+## Select a Performance Measure
+对于回归问题的典型的性能指标是Root Mean Square Error(RMSE）.
+
+![image-20220310153621901](https://raw.githubusercontent.com/lunnche/picgo-image/main/image-20220310153621901.png)
+
+![image-20220310154014971](https://raw.githubusercontent.com/lunnche/picgo-image/main/image-20220310154014971.png)
+
+
