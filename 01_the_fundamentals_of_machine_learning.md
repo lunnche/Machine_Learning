@@ -361,4 +361,16 @@ If the data were huge,you could either split your batch learning work across mul
 
 ![image-20220310154014971](https://raw.githubusercontent.com/lunnche/picgo-image/main/image-20220310154014971.png)
 
+# 啥时用RMSE，啥时用MAE？
+
+范数指标越高，它越关注大值而忽略小值。这就是RMSE对异常值 比MAE更敏感的原因。但是，当离群值呈指数形式稀有时（如钟形曲 线），RMSE表现非常好，通常是首选。
+
+![image-20220315092056146](https://raw.githubusercontent.com/lunnche/picgo-image/main/image-20220315092056146.png)
+
+## 获取数据
+
+建议在一个隔离的环境里工作（强烈推荐，这样你可以在库版本不冲突的情况下处理不同的项目）
+
+
+## Download the Data
 
