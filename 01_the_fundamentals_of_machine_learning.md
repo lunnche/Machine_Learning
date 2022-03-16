@@ -375,4 +375,17 @@ If the data were huge,you could either split your batch learning work across mul
 ## Download the Data
 
 ## 快速查看数据结构
+```python
+
+head()
+
+info()
+
+value_counts()
+
+describe()
+
+```
+
+## Create a Test Set
 
